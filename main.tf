@@ -47,7 +47,9 @@ resource "hcloud_server" "vps" {
     ssh_public_key = file(pathexpand(var.ssh_public_key_path))
     timezone       = var.timezone
     domain         = local.full_domain
+    subdomain      = var.subdomain
     admin_password = random_password.admin_password.result
+    traefik_router_rule = var.subdomain == "" ? "Host(`$${domain}`) || Host(`www.$${domain}`)" : "Host(`$${domain}`)"
   })
 
   public_net {

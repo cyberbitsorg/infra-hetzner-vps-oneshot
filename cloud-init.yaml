@@ -513,7 +513,7 @@ write_files:
             - no-new-privileges:true
           labels:
             - "traefik.enable=true"
-            - "traefik.http.routers.wordpress.rule=Host(`${domain}`) || Host(`www.${domain}`)"
+            - "traefik.http.routers.wordpress.rule=${traefik_router_rule}"
             - "traefik.http.routers.wordpress.entrypoints=websecure"
             - "traefik.http.routers.wordpress.tls=true"
             - "traefik.http.routers.wordpress.tls.certresolver=letsencrypt"
@@ -620,6 +620,9 @@ write_files:
   - path: /opt/wordpress/.env.example
     permissions: '0644'
     content: |
+      # Domain
+      domain=example.com
+
       # Database
       DB_ROOT_PASSWORD=CHANGE_ME
       DB_NAME=wordpress
@@ -699,6 +702,9 @@ write_files:
         echo "Generating .env with secure passwords..."
 
         {
+          echo "# Domain"
+          echo "domain=${domain}"
+          echo ""
           echo "# Database"
           echo "DB_ROOT_PASSWORD=$(openssl rand -hex 32)"
           echo "DB_NAME=wordpress"
@@ -741,20 +747,20 @@ write_files:
       echo ""
       echo "=== Done ==="
       echo ""
-      echo "6.  Verify all containers are running and healthy:"
-      echo "    docker ps"
+      echo "1. Verify all containers are running and healthy:"
+      echo "   docker ps"
       echo ""
-      echo "7.  Check Traefik logs for SSL certificate issuance:"
-      echo "    docker logs traefik"
+      echo "2. Check Traefik logs for SSL certificate issuance:"
+      echo "   docker logs traefik -f"
       echo ""
-      echo "8.  Visit to complete WordPress installation:"
-      echo "    https://${domain}"
+      echo "3. Visit to complete WordPress installation:"
+      echo "   https://${domain}"
       echo ""
       echo "=== Redis Cache Setup ==="
       echo ""      
-      echo "9.  In Wordpress add, install and activate the Redis Object Cache plugin by Till Krüss"
+      echo "4. In Wordpress add, install and activate the Redis Object Cache plugin by Till Krüss"
       echo ""
-      echo "10. Enable Object Cache in the plugin"
+      echo "5. Enable Object Cache in the plugin"
       echo ""
 
 # =============================================================================

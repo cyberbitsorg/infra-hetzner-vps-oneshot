@@ -2,32 +2,17 @@
 # Login Credentials
 # =============================================================================
 
-output "login_credentials" {
-  description = "SSH login credentials"
-  value       = <<-EOT
-
-    Initial Password: ${random_password.admin_password.result}
-
-  EOT
-  sensitive   = true
+output "server_ip" {
+  description = "Server IPv4 address"
+  value       = hcloud_server.vps.ipv4_address
 }
 
-# =============================================================================
-# DNS Configuration
-# =============================================================================
-
-output "dns_records" {
-  description = "DNS records to configure"
+output "login_credentials" {
+  description = "Initial admin password (change after first login)"
   value       = <<-EOT
-
-    Configure these DNS records at your registrar:
-
-    Type  Name                   Value
-    ----  ----                   -----
-    A     ${local.full_domain}   ${hcloud_server.vps.ipv4_address}
-    A     www.${var.domain}      ${hcloud_server.vps.ipv4_address}
-
+    Password: ${random_password.admin_password.result}
   EOT
+  sensitive   = true
 }
 
 # =============================================================================
@@ -40,22 +25,25 @@ output "next_steps" {
 
     === NEXT STEPS ===
 
-    1. Configure DNS! Wait until it properly resolves!
-       (See DNS records output above)
+    1. Configure DNS!
+       Create A record: ${local.full_domain} -> ${hcloud_server.vps.ipv4_address}
 
-    2. Wait for cloud-init to complete:
+    2. Test DNS propagation:
+       dig +short ${local.full_domain} @1.1.1.1
+
+    3. Wait for cloud-init to complete:
        ssh ${var.admin_username}@${hcloud_server.vps.ipv4_address} 'cloud-init status --wait'
 
-    3. Get your one-time password from tofu state:
+    4. Get your admin password with (strongly advised to change it on your VPS):
        tofu output -raw login_credentials
 
-    4. Login to the server:
+    5. Login to the server:
        ssh ${var.admin_username}@${hcloud_server.vps.ipv4_address} (enter your SSH key 2FA)
 
-    5. Change the password:
+    6. Change the password:
        passwd
 
-    6. Start Traefik and WordPress stack:
+    7. Start Traefik and WordPress stack:
        cd /opt/wordpress && sudo ./setup.sh
 
     -> You'll receive your final instructions after running the above script
