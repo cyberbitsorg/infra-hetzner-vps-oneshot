@@ -154,4 +154,4 @@ dps
 
 ## License
 
-Free to use. No warranties.
+MIT License. Free to use. No warranties.
