@@ -34,7 +34,7 @@ After `tofu apply`, cloud-init configures **everything** on first boot.
 
 This project requires the SSH key to already exist in Hetzner Cloud.
 
-Use [infra-hetzner-deploy](https://github.com/cyberbitsorg/infra-hetzner-deploy) to manage your SSH keys.
+Use [infra-hetzner-ssh](https://github.com/cyberbitsorg/infra-hetzner-ssh) to manage your SSH keys.
 
 ### 3. Create firewall
 
@@ -58,7 +58,7 @@ domain         = "your-domain.com"
 admin_username = "yourusername"
 ```
 
-### 4. Deploy
+### 5. Deploy
 
 ```bash
 tofu init
@@ -66,7 +66,7 @@ tofu plan
 tofu apply
 ```
 
-### 5. Configure DNS
+### 6. Configure DNS
 
 Set these records at your registrar:
 
@@ -77,7 +77,7 @@ Set these records at your registrar:
 
 Wait for DNS propagation.
 
-### 6. Start WordPress
+### 7. Start WordPress
 
 Follow the rest of the instructions.
 
@@ -103,10 +103,10 @@ tofu destroy
 ## After SSH login
 
 ```bash
-# Check security status
+# Check security status (UFW, Fail2Ban, AppArmor, auditd, unattended-upgrades)
 security-check
 
-# Docker status
+# Docker container status (alias for docker ps --format table)
 dps
 ```
 
