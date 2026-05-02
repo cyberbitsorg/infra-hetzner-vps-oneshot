@@ -2,7 +2,7 @@
 
 Automated, secure WordPress VPS deployment with OpenTofu and cloud-init.
 
-## What gets installed
+## Deployment
 
 After `tofu apply`, cloud-init configures **everything** on first boot.
 
@@ -21,7 +21,7 @@ After `tofu apply`, cloud-init configures **everything** on first boot.
 - Firewall created in Hetzner Cloud (see [infra-hetzner-firewall](https://github.com/cyberbitsorg/infra-hetzner-firewall))
 - Domain name
 
-## Quick Start
+## Quick start
 
 ### 1. Create Hetzner API token
 
@@ -110,7 +110,9 @@ security-check
 dps
 ```
 
-## What's Secured?
+## Security
+
+Some details.
 
 ### Network
 
