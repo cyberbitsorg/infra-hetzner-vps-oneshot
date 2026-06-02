@@ -342,7 +342,7 @@ write_files:
               customFrameOptionsValue: "SAMEORIGIN"
               referrerPolicy: "strict-origin-when-cross-origin"
               permissionsPolicy: "camera=(), microphone=(), geolocation=(), payment=()"
-              contentSecurityPolicy: "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; frame-ancestors 'self';"
+              contentSecurityPolicy: "default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data: https:; connect-src 'self' https: wss:; frame-src 'self' blob: https:; frame-ancestors 'self';"
               customResponseHeaders:
                 X-Powered-By: ""
                 Server: ""
@@ -425,7 +425,7 @@ write_files:
             - no-new-privileges:true
 
         redis:
-          image: redis:7-alpine
+          image: redis:8-alpine
           container_name: wordpress-redis
           restart: unless-stopped
           command: redis-server --maxmemory 128mb --maxmemory-policy allkeys-lru
@@ -442,7 +442,7 @@ write_files:
             - no-new-privileges:true
 
         wordpress:
-          image: wordpress:6-fpm-alpine
+          image: wordpress:7-fpm-alpine
           container_name: wordpress-app
           restart: unless-stopped
           depends_on:
@@ -521,7 +521,7 @@ write_files:
             - "traefik.http.services.wordpress.loadbalancer.server.port=80"
 
         wpcli:
-          image: wordpress:cli
+          image: wordpress:cli-php8.5
           container_name: wordpress-wpcli
           environment:
             WORDPRESS_DB_HOST: db:3306
