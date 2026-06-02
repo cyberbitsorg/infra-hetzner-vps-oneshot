@@ -359,7 +359,7 @@ write_files:
     content: |
       services:
         traefik:
-          image: traefik:v3.6
+          image: traefik:v3.7
           container_name: traefik
           restart: unless-stopped
           environment:
@@ -492,7 +492,7 @@ write_files:
             - "${domain}:host-gateway"
 
         nginx:
-          image: nginx:1.25-alpine
+          image: nginx:1.30-alpine
           container_name: wordpress-nginx
           restart: unless-stopped
           depends_on:
