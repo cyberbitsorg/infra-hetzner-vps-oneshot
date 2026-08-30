@@ -41,14 +41,14 @@ resource "hcloud_server" "vps" {
   firewall_ids = [data.hcloud_firewall.default.id]
 
   user_data = templatefile("${path.module}/cloud-init.yaml", {
-    server_name    = var.server_name
-    admin_username = var.admin_username
-    admin_email    = var.admin_email
-    ssh_public_key = file(pathexpand(var.ssh_public_key_path))
-    timezone       = var.timezone
-    domain         = local.full_domain
-    subdomain      = var.subdomain
-    admin_password = random_password.admin_password.result
+    server_name         = var.server_name
+    admin_username      = var.admin_username
+    admin_email         = var.admin_email
+    ssh_public_key      = file(pathexpand(var.ssh_public_key_path))
+    timezone            = var.timezone
+    domain              = local.full_domain
+    subdomain           = var.subdomain
+    admin_password      = random_password.admin_password.result
     traefik_router_rule = var.subdomain == "" ? "Host(`$${domain}`) || Host(`www.$${domain}`)" : "Host(`$${domain}`)"
   })
 
