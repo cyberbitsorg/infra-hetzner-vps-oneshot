@@ -2,6 +2,9 @@
 
 Automated, secure WordPress VPS deployment with OpenTofu and cloud-init.
 
+> [!IMPORTANT]
+> This repository is superseded by [infra-hetzner-vps-clean](https://github.com/cyberbitsorg/infra-hetzner-vps-clean) and will become read-only from 2026-09-01.
+
 ## Deployment
 
 After `tofu apply`, cloud-init configures **everything** on first boot.
